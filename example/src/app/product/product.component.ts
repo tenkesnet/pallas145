@@ -16,10 +16,19 @@ export class ProductComponent {
   }
 
   get total(): string {
-    return this.model.getProducts().reduce((total, p) => total + (p.price ?? 0), 0).toFixed(2);
+    return this.model.getProducts().
+      reduce((total, p) => total + (p.price ?? 0), 0).toFixed(2);
   }
 
   get message(): string {
     return `${this.messages[this.index]} $${this.total}`
+  }
+
+  toggleMessage(): void {
+    this.index = (this.index + 1) % 2;
+  }
+
+  removeProduct(): void {
+    this.model.deleteProduct(this.model.getProducts()[0]?.id ?? 0);
   }
 }
