@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { Model } from '../repository.model';
 
 @Component({
@@ -9,7 +9,7 @@ import { Model } from '../repository.model';
 export class ProductComponent {
   private model: Model = new Model();
   private messages = ["Total", "Price"];
-  private index = 0;
+  private index = signal<number>(0);
 
   get count(): number {
     return this.model.getProducts().length;
@@ -20,12 +20,17 @@ export class ProductComponent {
       reduce((total, p) => total + (p.price ?? 0), 0).toFixed(2);
   }
 
-  get message(): string {
-    return `${this.messages[this.index]} $${this.total}`
-  }
+
+  // get message(): string {
+  //   return `${this.messages[this.index()]} $${this.total}`;
+  // }
+  message = computed(() => {
+    return `${this.messages[this.index()]} $${this.total}`;
+  });
 
   toggleMessage(): void {
-    this.index = (this.index + 1) % 2;
+    //this.index = (this.index + 1) % 2;
+    this.index.update(currentValue => (currentValue + 1) % 2);
   }
 
   removeProduct(): void {
