@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { ActiveUsersComponent } from './active-users/active-users.component';
 import { InactiveUsersComponent } from './inactive-users/inactive-users.component';
 import { CounterService } from './counter.service';
+import { UserService } from './users.service';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { CounterService } from './counter.service';
     BrowserModule,
     FormsModule,
   ],
-  providers: [CounterService],
-  bootstrap: [AppComponent]
+  providers: [],
+  bootstrap: [AppComponent],
+  exports: []
 })
 export class AppModule { }

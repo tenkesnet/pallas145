@@ -12,7 +12,7 @@ export class ProductRepository {
         this.categories = computed(() => {
             return this.dataSource.products()
                 .map(p => p.category ?? "(None)")
-                .filter((c, index, array) => 
+                .filter((c, index, array) =>
                     array.indexOf(c) == index).sort();
         })
     }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
 import { UserService } from '../users.service';
 
@@ -8,12 +8,12 @@ import { UserService } from '../users.service';
   styleUrls: ['./active-users.component.css']
 })
 export class ActiveUsersComponent implements OnInit {
-  users: string[]=[];
+  users: { name: string, active: boolean }[] = [];
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
-    this.users = this.userService.activeUsers;
+    this.users = this.userService.users.filter(u => u.active);
   }
 
   onSetToInactive(id: number) {
