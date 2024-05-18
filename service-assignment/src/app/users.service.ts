@@ -16,6 +16,10 @@ export class UserService {
 
   }
 
+  get publicCounterService() {
+    return this.counterService;
+  }
+
   get Users() {
     return this.users.asReadonly();
   }

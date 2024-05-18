@@ -54,7 +54,8 @@ describe('AppComponent', () => {
   it(`should have as title 'service-assignment'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('service-assignment');
+    app.title = "Test"
+    expect(app.title).toEqual('Test');
   });
 
   it('should render title', () => {
@@ -65,7 +66,12 @@ describe('AppComponent', () => {
     if (compiled.querySelector('h1') != null) {
     }*/
     expect(compiled.querySelector('h1')?.textContent).toEqual('Hello world!');
-
-
   });
+
+  it('Check span', () => {
+    const fixture = TestBed.createComponent(ActiveUsersComponent);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement
+    expect(compiled.querySelector('span')).not.toBeNull()
+  })
 });

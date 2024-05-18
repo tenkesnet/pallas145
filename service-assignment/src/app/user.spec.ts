@@ -6,6 +6,6 @@ describe('User', () => {
   });
   it('Field test', () => {
     let user = new User()
-    expect('address' in user).toBeTruthy()
+    expect('name' in user).toBeTruthy()
   })
 });
