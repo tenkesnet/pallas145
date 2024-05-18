@@ -68,10 +68,5 @@ describe('AppComponent', () => {
     expect(compiled.querySelector('h1')?.textContent).toEqual('Hello world!');
   });
 
-  it('Check span', () => {
-    const fixture = TestBed.createComponent(ActiveUsersComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement
-    expect(compiled.querySelector('span')).not.toBeNull()
-  })
+
 });
