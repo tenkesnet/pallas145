@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, computed, effect, signal } from '@angular/core';
+import { Component, computed, effect, signal } from '@angular/core';
 import { Model } from '../repository.model';
-import { compilePipeFromMetadata } from '@angular/compiler';
+
 
 @Component({
   selector: 'app',

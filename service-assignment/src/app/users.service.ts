@@ -1,27 +1,33 @@
-import { Injectable } from '@angular/core';
+import { Injectable, WritableSignal, signal } from '@angular/core';
 
 import { CounterService } from './counter.service';
 
 @Injectable()
 export class UserService {
-  users: { name: string, active: boolean }[] = [
-    { name: 'Max', active: true },
-    { name: 'Anna', active: true },
-    { name: 'Chris', active: false },
-    { name: 'Manu', active: false }];
+  private users: WritableSignal<{ id: number, name: string, active: boolean }[]>;
 
+  constructor(private counterService: CounterService) {
+    this.users = signal([
+      { id: 0, name: 'Max', active: true },
+      { id: 1, name: 'Anna', active: true },
+      { id: 2, name: 'Chris', active: false },
+      { id: 3, name: 'Manu', active: false }]);
 
-  constructor(private counterService: CounterService) { }
+  }
+
+  get Users() {
+    return this.users.asReadonly();
+  }
 
   setToActive(id: number) {
-    this.users[id].active = true;
+    this.users.update(u => { u[id].active = true; return u.slice(0); });
     this.counterService.incrementInActiveToActive();
-    console.log(this.users);
+    console.log(this.users());
   }
 
   setToInactive(id: number) {
-    this.users[id].active = false;
+    this.users.update(u => { u[id].active = false; return u.slice(0); });
     this.counterService.incrementActiveToInactive();
-    console.log(this.users);
+    console.log(this.users());
   }
 }

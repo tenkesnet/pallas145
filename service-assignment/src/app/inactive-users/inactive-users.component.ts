@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, effect } from '@angular/core';
 
 import { UserService } from '../users.service';
 
@@ -8,12 +8,16 @@ import { UserService } from '../users.service';
   styleUrls: ['./inactive-users.component.css']
 })
 export class InactiveUsersComponent implements OnInit {
-  users: { name: string, active: boolean }[] = [];
+  users: { id: number, name: string, active: boolean }[] = [];
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService) {
+    let userEffect = effect(() => {
+      this.users = this.userService.Users().filter(u => !u.active);
+    })
+  }
 
   ngOnInit() {
-    this.users = this.userService.users.filter(u => !u.active);
+    //this.users = this.userService.Users().filter(u => !u.active);
   }
 
   onSetToActive(id: number) {

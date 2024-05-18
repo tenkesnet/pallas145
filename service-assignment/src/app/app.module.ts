@@ -19,7 +19,7 @@ import { UserService } from './users.service';
     BrowserModule,
     FormsModule,
   ],
-  providers: [],
+  providers: [UserService, CounterService],
   bootstrap: [AppComponent],
   exports: []
 })
