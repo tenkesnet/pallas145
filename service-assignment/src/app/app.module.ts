@@ -9,6 +9,7 @@ import { InactiveUsersComponent } from './inactive-users/inactive-users.componen
 import { CounterService } from './counter.service';
 import { UserService } from './users.service';
 
+
 @NgModule({
   declarations: [
     AppComponent,
