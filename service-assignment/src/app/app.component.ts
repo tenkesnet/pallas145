@@ -11,7 +11,7 @@ import { ActiveUsersComponent } from './active-users/active-users.component'
   providers: []
 })
 export class AppComponent {
-  title = ''
+  title = 'service-assignment'
   price = 6
 
   afaSzamitas(szam: number): number {

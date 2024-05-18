@@ -61,6 +61,11 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello,');
+    /* ? operator jelentése
+    if (compiled.querySelector('h1') != null) {
+    }*/
+    expect(compiled.querySelector('h1')?.textContent).toEqual('Hello world!');
+
+
   });
 });

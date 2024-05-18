@@ -1,6 +1,7 @@
 import { Component, OnInit, effect } from '@angular/core';
 
 import { UserService } from '../users.service';
+import { User } from '../user';
 
 @Component({
   selector: 'app-inactive-users',
@@ -8,7 +9,7 @@ import { UserService } from '../users.service';
   styleUrls: ['./inactive-users.component.css']
 })
 export class InactiveUsersComponent implements OnInit {
-  users: { id: number, name: string, active: boolean }[] = [];
+  users: User[] = [];
 
   constructor(private userService: UserService) {
     let userEffect = effect(() => {

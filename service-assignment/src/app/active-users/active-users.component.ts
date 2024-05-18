@@ -1,6 +1,7 @@
 import { Component, effect } from '@angular/core';
 
 import { UserService } from '../users.service';
+import { User } from '../user';
 
 @Component({
   selector: 'app-active-users',
@@ -8,7 +9,7 @@ import { UserService } from '../users.service';
   styleUrls: ['./active-users.component.css']
 })
 export class ActiveUsersComponent {
-  users: { id: number, name: string, active: boolean }[] = [];
+  users: User[] = [];
 
   constructor(private userService: UserService) {
     let userEffect = effect(() => {

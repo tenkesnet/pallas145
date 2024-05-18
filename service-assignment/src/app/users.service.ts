@@ -1,10 +1,11 @@
 import { Injectable, WritableSignal, signal } from '@angular/core';
 
 import { CounterService } from './counter.service';
+import { User } from './user';
 
 @Injectable()
 export class UserService {
-  private users: WritableSignal<{ id: number, name: string, active: boolean }[]>;
+  private users: WritableSignal<User[]>;
 
   constructor(private counterService: CounterService) {
     this.users = signal([
