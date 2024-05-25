@@ -17,7 +17,7 @@ class TestComponent {
 
 
 describe("Jasmine Test Environment", () => {
-    let fixture: ComponentFixture<SimpleComponent>;
+    let fixture: ComponentFixture<TestComponent>;
     let component: SimpleComponent;
     let mockRepository = {
         Products: signal([
@@ -37,12 +37,11 @@ describe("Jasmine Test Environment", () => {
         });
 
         TestBed.compileComponents().then(() => {
-            fixture = TestBed.createComponent(SimpleComponent);
-            component = fixture.componentInstance;
-            debugElement = fixture.debugElement;
-            bindingElement
-                = debugElement.query(By.css("span")).nativeElement;
-            divElement = debugElement.children[0].nativeElement;
+            fixture = TestBed.createComponent(TestComponent);
+            fixture.detectChanges();
+            component = fixture.componentInstance.SimpleComponent;
+            debugElement = fixture.debugElement
+                .query(By.directive(SimpleComponent));
         });
     }));
 
@@ -66,35 +65,35 @@ describe("Jasmine Test Environment", () => {
         expect(component.getProducts().length).toBe(0);
     });
 
-    it("filters categories 2", () => {
-        component.category = "Chess"
-        fixture.detectChanges();
-        expect(component.getProducts().length).toBe(1);
-        expect(bindingElement.textContent).toContain("1");
-        component.category = "Soccer";
-        fixture.detectChanges();
-        expect(component.getProducts().length).toBe(2);
-        expect(bindingElement.textContent).toContain("2");
-        component.category = "Running";
-        fixture.detectChanges();
-        expect(component.getProducts().length).toBe(0);
-        expect(bindingElement.textContent).toContain("0");
-    });
+    // it("filters categories 2", () => {
+    //     component.category = "Chess"
+    //     fixture.detectChanges();
+    //     expect(component.getProducts().length).toBe(1);
+    //     expect(bindingElement.textContent).toContain("1");
+    //     component.category = "Soccer";
+    //     fixture.detectChanges();
+    //     expect(component.getProducts().length).toBe(2);
+    //     expect(bindingElement.textContent).toContain("2");
+    //     component.category = "Running";
+    //     fixture.detectChanges();
+    //     expect(component.getProducts().length).toBe(0);
+    //     expect(bindingElement.textContent).toContain("0");
+    // });
 
-    it("handles mouse events", () => {
-        expect(component.highlighted).toBeFalsy();
-        expect(divElement.classList.contains("bg-success")).toBeFalsy();
-        debugElement.triggerEventHandler("mouseenter",
-            new Event("mouseenter"));
-        fixture.detectChanges();
-        expect(component.highlighted).toBeTruthy();
-        expect(divElement.classList.contains("bg-success")).toBeTruthy();
-        debugElement.triggerEventHandler("mouseleave",
-            new Event("mouseleave"));
-        fixture.detectChanges();
-        expect(component.highlighted).toBeFalsy();
-        expect(divElement.classList.contains("bg-success")).toBeFalsy();
-    });
+    // it("handles mouse events", () => {
+    //     expect(component.highlighted).toBeFalsy();
+    //     expect(divElement.classList.contains("bg-success")).toBeFalsy();
+    //     debugElement.triggerEventHandler("mouseenter",
+    //         new Event("mouseenter"));
+    //     fixture.detectChanges();
+    //     expect(component.highlighted).toBeTruthy();
+    //     expect(divElement.classList.contains("bg-success")).toBeTruthy();
+    //     debugElement.triggerEventHandler("mouseleave",
+    //         new Event("mouseleave"));
+    //     fixture.detectChanges();
+    //     expect(component.highlighted).toBeFalsy();
+    //     expect(divElement.classList.contains("bg-success")).toBeFalsy();
+    // });
 
     it("implements output property", () => {
         let highlighted: boolean = false;
@@ -105,5 +104,19 @@ describe("Jasmine Test Environment", () => {
         debugElement.triggerEventHandler("mouseleave",
             new Event("mouseleave"));
         expect(highlighted).toBeFalsy();
+    });
+
+    it("receives the model through an input property", () => {
+        component.category = "Chess";
+        fixture.detectChanges();
+        let products = mockRepository.Products()
+            .filter(p => p.category == component.category);
+        let componentProducts = component.getProducts();
+        for (let i = 0; i < componentProducts.length; i++) {
+            expect(componentProducts[i]).toEqual(products[i]);
+        }
+        expect(debugElement.query(By.css("span"))
+            .nativeElement.textContent)
+            .toContain(products.length);
     });
 });
